@@ -7,8 +7,8 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>دفتر خدمات فنی و مهندسی بهاران تصفیه - v1.1.100</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>دفتر خدمات فنی و مهندسی بهاران تصفیه</title>
 <style id="invcss">
 .inv{position:relative;width:794px;min-height:1123px;margin:0 auto;background:#fff;color:#111;font-family:Tahoma,Arial,sans-serif;direction:rtl;padding:175px 48px 150px;box-sizing:border-box;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .inv .wv{position:absolute;left:0;width:100%;height:150px}.inv .wt{top:0}.inv .wb{bottom:0;transform:scaleY(-1)}
@@ -73,31 +73,17 @@ body.print-preview #pv{display:block}
 .pvbar{position:sticky;top:0;z-index:5;display:flex;gap:8px;justify-content:center;padding:10px;background:#0b6fb8}
 .pvbar button{border:0;border-radius:10px;padding:9px 20px;font:inherit;cursor:pointer}
 .pvbody{padding:10px 0}
-
-/* --- استایل پنل دیباگ --- */
-#debugBtn{position:fixed;bottom:15px;left:15px;width:50px;height:50px;border-radius:50%;background:#1e293b;color:#fff;border:2px solid #475569;font-size:22px;z-index:9998;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center}
-#debugBtn.has-err{background:#dc2626;border-color:#fca5a5;animation:pulse 1s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(220,38,38,.7)}70%{box-shadow:0 0 0 10px rgba(220,38,38,0)}100%{box-shadow:0 0 0 0 rgba(220,38,38,0)}}
-#debugPanel{position:fixed;bottom:0;left:0;right:0;background:#0f172a;color:#e2e8f0;font-family:monospace;font-size:12px;z-index:9999;border-top:3px solid #3b82f6;transform:translateY(100%);transition:transform .3s;display:flex;flex-direction:column;height:60vh;max-height:80vh;box-shadow:0 -5px 20px rgba(0,0,0,.5);border-radius:16px 16px 0 0}
-#debugPanel.open{transform:translateY(0)}
-.dbg-header{padding:10px 14px;background:#1e293b;border-bottom:1px solid #334155;display:flex;justify-content:space-between;align-items:center;border-radius:16px 16px 0 0;flex-wrap:wrap;gap:8px}
-.dbg-title{font-weight:bold;font-size:14px;color:#fff;font-family:Tahoma;display:flex;align-items:center;gap:6px}
-.dbg-status{display:flex;gap:10px;font-size:11px;font-family:Tahoma;flex-wrap:wrap}
-.dbg-status span{display:flex;align-items:center;gap:4px;padding:2px 8px;border-radius:8px;background:#334155}
-.dot-green{width:8px;height:8px;border-radius:50%;background:#22c55e}
-.dot-red{width:8px;height:8px;border-radius:50%;background:#ef4444}
-.dot-gray{width:8px;height:8px;border-radius:50%;background:#94a3b8}
-.dbg-actions button{background:#3b82f6;color:#fff;border:0;padding:4px 10px;border-radius:6px;font-family:Tahoma;font-size:11px;cursor:pointer;margin-left:4px}
-.dbg-actions button.close-btn{background:#ef4444}
-.dbg-body{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:4px}
-.log-row{padding:4px 6px;border-bottom:1px solid #1e293b;line-height:1.4;word-break:break-all}
-.log-row.info{color:#cbd5e1}
-.log-row.success{color:#4ade80}
-.log-row.error{color:#f87171;background:rgba(239,68,68,.1);border-radius:4px}
-.log-row.warn{color:#fbbf24}
-.log-time{color:#64748b;font-size:10px;margin-left:6px;font-family:sans-serif}
-.log-tag{font-weight:bold;margin-left:4px}
-
+#debugBtn{position:fixed;bottom:15px;left:15px;width:46px;height:46px;border-radius:50%;background:#1e293b;color:#fff;border:2px solid #475569;font-size:20px;z-index:9998;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#debugBtn.has-err{background:#dc2626;border-color:#fca5a5}
+#debugPanel{position:fixed;bottom:0;left:0;right:0;background:#0f172a;color:#e2e8f0;font:12px monospace;z-index:9999;border-top:3px solid #3b82f6;transform:translateY(100%);transition:transform .3s;display:flex;flex-direction:column;height:55vh;border-radius:16px 16px 0 0}
+#debugPanel.open{transform:none}
+.dbg-h{padding:10px 14px;background:#1e293b;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-family:Tahoma;border-radius:16px 16px 0 0}
+.dbg-h span{padding:2px 8px;border-radius:8px;background:#334155;font-size:11px;margin-left:4px}
+.dbg-h button{background:#3b82f6;color:#fff;border:0;padding:4px 10px;border-radius:6px;cursor:pointer;margin-left:4px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:4px;background:#94a3b8}.dot.g{background:#22c55e}.dot.r{background:#ef4444}
+#debugLogs{flex:1;overflow-y:auto;padding:10px}
+.log-row{padding:4px 6px;border-bottom:1px solid #1e293b;word-break:break-all}.log-row.success{color:#4ade80}.log-row.error{color:#f87171}.log-row.warn{color:#fbbf24}
+.log-time{color:#64748b;margin-left:6px}
 @media(max-width:760px){.g2{grid-template-columns:1fr}.bub{filter:none;opacity:.25}.glass,header,.tabs{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,255,255,.92)}}
 @media print{@page{size:A4;margin:0}html,body{height:auto!important;overflow:visible!important;background:#fff}
 body.print-preview>*:not(#pv){display:none!important}.pvbar{display:none}#pv{position:static;overflow:visible;background:#fff}.pvbody{padding:0}.inv{zoom:1!important}}
@@ -111,10 +97,10 @@ body.print-preview>*:not(#pv){display:none!important}.pvbar{display:none}#pv{pos
 <button class="btn" style="width:100%" onclick="login()">ورود</button></div></div>
 
 <div id="publicView" class="full" hidden><div class="glass box" style="margin-top:4vh"><h2>ثبت درخواست خدمات — بهاران تصفیه</h2>
-<div id="pubForm"></div><button class="btn" style="width:100%" onclick="pubSubmit()">ثبت درخواست</button></div></div>
+<div id="pubForm"></div><button class="btn" style="width:100%" onclick="pubSubmit()" id="pubBtn">ثبت درخواست</button><button class="btn g" id="pubEdit" hidden style="width:100%;margin:8px 0 0" onclick="pubBack()">ویرایش اطلاعات</button></div></div>
 
 <div id="app" hidden>
-<header><div><b>دفتر خدمات فنی و مهندسی بهاران تصفیه</b> <span style="font-size:10px;color:#64748b;background:#e2e8f0;padding:2px 6px;border-radius:6px;margin-right:4px">v1.1.100</span></div><button class="btn d" onclick="logout()">خروج</button></header>
+<header><b>دفتر خدمات فنی و مهندسی بهاران تصفیه</b><button class="btn d" onclick="logout()">خروج</button></header>
 <nav class="tabs" id="tabs"></nav><main id="main"></main></div>
 
 <datalist id="cl"></datalist>
@@ -122,150 +108,31 @@ body.print-preview>*:not(#pv){display:none!important}.pvbar{display:none}#pv{pos
 <div style="margin-top:8px"><button class="btn" id="ms">ذخیره</button><button class="btn g" onclick="closeM()">انصراف</button></div></div></div>
 <div id="pv"><div class="pvbar"><button style="background:#fff" onclick="window.print()">چاپ</button><button style="background:#fff" onclick="dlInv()">دانلود</button><button style="background:#fecaca" onclick="closePV()">بستن</button></div><div class="pvbody" id="pvb"></div></div>
 <div id="toast"></div>
-
-<!-- پنل دیباگ -->
-<button id="debugBtn" onclick="toggleDebug()">🐞</button>
-<div id="debugPanel">
-  <div class="dbg-header">
-    <div class="dbg-title">🐞 پنل دیباگ v1.1.100</div>
-    <div class="dbg-status">
-      <span id="dbgNet"><div class="dot-gray"></div> اینترنت</span>
-      <span id="dbgSrv"><div class="dot-gray"></div> سرور</span>
-      <span id="dbgUsers">👤 0 آنلاین</span>
-    </div>
-    <div class="dbg-actions">
-      <button onclick="Debug.clear()">پاک کردن</button>
-      <button class="close-btn" onclick="toggleDebug()">بستن</button>
-    </div>
-  </div>
-  <div class="dbg-body" id="debugLogs"></div>
-</div>
+<button id="debugBtn" onclick="document.getElementById('debugPanel').classList.toggle('open')">🐞</button>
+<div id="debugPanel"><div class="dbg-h"><b>🐞 پنل دیباگ</b><div><span id="dbgNet"><i class="dot"></i>اینترنت</span><span id="dbgSrv"><i class="dot"></i>سرور</span><span id="dbgUsers">👤 ۰</span></div><div><button onclick="Debug.clear()">پاک کردن</button><button style="background:#ef4444" onclick="document.getElementById('debugPanel').classList.remove('open')">بستن</button></div></div><div id="debugLogs"></div></div>
 
 <script>
 'use strict';
-
-/* ================= پنل دیباگ ================= */
-const Debug = {
-  logs: [],
-  el: null,
-  init() {
-    this.el = document.getElementById('debugLogs');
-    this.add('info', 'سیستم دیباگ راه‌اندازی شد (v1.1.100)');
-    
-    // اینترنت
-    window.addEventListener('online', () => this.updateNet(true));
-    window.addEventListener('offline', () => this.updateNet(false));
-    this.updateNet(navigator.onLine);
-
-    // بررسی دوره‌ای سرور
-    setInterval(() => this.pingServer(), 15000);
-    this.pingServer();
-  },
-  add(type, msg) {
-    const time = new Date().toLocaleTimeString('fa-IR');
-    this.logs.push({ time, type, msg });
-    if (this.logs.length > 200) this.logs.shift();
-    
-    const color = type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warn' ? 'warn' : 'info';
-    const html = `<div class="log-row ${color}"><span class="log-time">${time}</span><span class="log-tag">[${type.toUpperCase()}]</span>${msg}</div>`;
-    
-    if (this.el) {
-      this.el.insertAdjacentHTML('beforeend', html);
-      this.el.scrollTop = this.el.scrollHeight;
-    }
-    if (type === 'error') {
-      document.getElementById('debugBtn').classList.add('has-err');
-    }
-    console.log(`[${type.toUpperCase()}] ${msg}`);
-  },
-  clear() {
-    this.logs = [];
-    if (this.el) this.el.innerHTML = '';
-    document.getElementById('debugBtn').classList.remove('has-err');
-    this.add('info', 'لاگ‌ها پاک شد');
-  },
-  updateNet(isOnline) {
-    const el = document.getElementById('dbgNet');
-    if (isOnline) {
-      el.innerHTML = '<div class="dot-green"></div> اینترنت';
-      this.add('success', 'اتصال به اینترنت برقرار است.');
-    } else {
-      el.innerHTML = '<div class="dot-red"></div> اینترنت';
-      this.add('error', 'اتصال به اینترنت قطع شد!');
-    }
-  },
-  async pingServer() {
-    if (!supabaseClient) {
-      document.getElementById('dbgSrv').innerHTML = '<div class="dot-red"></div> سرور';
-      return;
-    }
-    try {
-      const start = Date.now();
-      // درخواست ساده برای چک کردن سرور
-      const { data, error } = await supabaseClient.from('baharan_data').select('id').limit(1);
-      const ping = Date.now() - start;
-      
-      if (error) throw error;
-      
-      document.getElementById('dbgSrv').innerHTML = '<div class="dot-green"></div> سرور';
-      if (Date.now() - (this._lastPing || 0) > 30000) { // هر ۳۰ ثانیه یکبار لاگ بدهد که لاگ پر نشود
-        this.add('success', `اتصال به سرور Supabase برقرار است (پینگ: ${ping}ms)`);
-        this._lastPing = Date.now();
-      }
-    } catch (err) {
-      document.getElementById('dbgSrv').innerHTML = '<div class="dot-red"></div> سرور';
-      this.add('error', `خطا در اتصال به سرور: ${err.message || JSON.stringify(err)}`);
-    }
-  }
-};
-
-function toggleDebug() {
-  const panel = document.getElementById('debugPanel');
-  panel.classList.toggle('open');
-}
+/* ===== دیباگ و اتصال Supabase ===== */
+let supabaseClient=null;
+const Debug={el:null,init(){this.el=document.getElementById('debugLogs');this.add('info','سیستم دیباگ فعال شد');
+window.addEventListener('online',()=>this.net(true));window.addEventListener('offline',()=>this.net(false));this.net(navigator.onLine);
+if(!isPub()){setInterval(()=>this.ping(),15000);this.ping()}},
+add(t,m){m=String(m).replace(/</g,'&lt;');const time=new Date().toLocaleTimeString('fa-IR');
+if(this.el){this.el.insertAdjacentHTML('beforeend',`<div class="log-row ${t}"><span class="log-time">${time}</span>[${t.toUpperCase()}] ${m}</div>`);while(this.el.children.length>200)this.el.firstChild.remove();this.el.scrollTop=this.el.scrollHeight}
+if(t==='error')document.getElementById('debugBtn').classList.add('has-err');console.log('['+t+'] '+m)},
+clear(){this.el.innerHTML='';document.getElementById('debugBtn').classList.remove('has-err')},
+net(on){document.getElementById('dbgNet').innerHTML='<i class="dot '+(on?'g':'r')+'"></i>اینترنت';this.add(on?'success':'error',on?'اینترنت متصل است':'اینترنت قطع شد')},
+async ping(){const e=document.getElementById('dbgSrv');if(!supabaseClient){e.innerHTML='<i class="dot r"></i>سرور';return}
+try{const t=Date.now(),{error}=await supabaseClient.from('baharan_data').select('id').limit(1);if(error)throw error;e.innerHTML='<i class="dot g"></i>سرور';
+if(Date.now()-(this.lp||0)>30000){this.add('success','اتصال سرور برقرار (پینگ '+(Date.now()-t)+'ms)');this.lp=Date.now()}}catch(x){e.innerHTML='<i class="dot r"></i>سرور';this.add('error','خطای سرور: '+(x.message||x))}}};
 Debug.init();
-
-/* ================= تنظیمات Supabase ================= */
-const SUPABASE_URL = 'https://lovgxgphwbumjcuwqsba.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxvdmd4Z3Bod2J1bWpjdXdxc2JhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ1NDUyODIsImV4cCI6MjExMDEyMTI4Mn0.fElB1vCYOaFQ8-k8K91d87aPOXLXdMp9XUoo7ozMgik';
-
-let supabaseClient = null;
-try {
-  if (window.supabase) {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-      realtime: { params: { eventsPerSecond: 2 } }
-    });
-    Debug.add('success', 'کلاینت Supabase مقداردهی اولیه شد.');
-  } else {
-    throw new Error('کتابخانه Supabase لود نشد (مشکل در CDN)');
-  }
-} catch (e) {
-  Debug.add('error', e.message);
-}
-
-// سیستم آنلاین بودن کاربران (Presence)
-let onlineCount = 0;
-const myClientId = 'client_' + Math.random().toString(36).slice(2, 9);
-if (supabaseClient) {
-  const channel = supabaseClient.channel('online_users', { config: { presence: { key: myClientId } } });
-  channel
-    .on('presence', { event: 'sync' }, () => {
-      const state = channel.presenceState();
-      onlineCount = Object.keys(state).length;
-      document.getElementById('dbgUsers').innerText = `👤 ${onlineCount} آنلاین`;
-    })
-    .subscribe(async (status) => {
-      if (status === 'SUBSCRIBED') {
-        await channel.track({ online_at: new Date().toISOString() });
-        Debug.add('info', 'اتصال Realtime (تعداد کاربران آنلاین) برقرار شد.');
-      } else if (status === 'CLOSED' || status === 'CHANNEL_ERROR') {
-        document.getElementById('dbgUsers').innerText = `👤 نامشخص`;
-        Debug.add('warn', 'اتصال Realtime قطع شد.');
-      }
-    });
-}
-
-/* ================= تنظیمات پایه ================= */
+const SUPABASE_URL='https://lovgxgphwbumjcuwqsba.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxvdmd4Z3Bod2J1bWpjdXdxc2JhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ1NDUyODIsImV4cCI6MjExMDEyMTI4Mn0.fElB1vCYOaFQ8-k8K91d87aPOXLXdMp9XUoo7ozMgik';
+try{if(!window.supabase)throw new Error('کتابخانه Supabase بارگذاری نشد');supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);Debug.add('success','کلاینت Supabase آماده شد')}catch(e){Debug.add('error',e.message)}
+if(supabaseClient){const ch=supabaseClient.channel('online_users',{config:{presence:{key:'c_'+Math.random().toString(36).slice(2,9)}}});
+ch.on('presence',{event:'sync'},()=>{document.getElementById('dbgUsers').textContent='👤 '+Object.keys(ch.presenceState()).length+' آنلاین'}).subscribe(async st=>{if(st==='SUBSCRIBED')await ch.track({t:Date.now()})})}
+/* ===== تنظیمات پایه ===== */
 const KEY='baharan_office_v1';
 const $=s=>document.querySelector(s);
 const FA='۰۱۲۳۴۵۶۷۸۹';
@@ -289,47 +156,19 @@ function parseJ(s){const p=en(s).split('/').map(Number);if(p.length!==3||p.some(
 /* ===== داده ===== */
 const DEF=()=>({customers:[],services:[],income:[],invoices:[],settings:{password:'123456',prefix:'BH-',next:1,card:'',owner:'',address:'قم پردیسان بلوار امام صادق، خیابان اندیشه.'}});
 let db=DEF();
-try{const r=JSON.parse(localStorage.getItem(KEY)||'null');if(r&&r.customers){db=Object.assign(DEF(),r);db.settings=Object.assign(DEF().settings,r.settings); Debug.add('info', 'داده‌ها از حافظه مرورگر (LocalStorage) خوانده شد.')}}catch(e){}
-
-const save=()=>{
-  Debug.add('info', 'درخواست ذخیره‌سازی آغاز شد...');
-  try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){ Debug.add('error', 'خطا در ذخیره در مرورگر: ' + e.message); }
-  
-  if(supabaseClient){
-    supabaseClient.from('baharan_data').upsert({id:'main',data:db,updated_at:new Date().toISOString()}).then(({error})=>{
-      if(error){
-        Debug.add('error', 'خطا در ذخیره روی سرور: ' + error.message);
-      } else {
-        Debug.add('success', 'اطلاعات با موفقیت روی سرور ذخیره شد.');
-      }
-    }).catch(err => Debug.add('error', 'خطای شبکه در ذخیره: ' + err.message));
-  } else {
-    Debug.add('warn', 'سرور متصل نیست. فقط در مرورگر ذخیره شد.');
-  }
-};
-
-async function loadCloudData(){
-  if(!supabaseClient){
-    Debug.add('error', 'امکان دریافت اطلاعات نیست: سرور متصل نیست.');
-    return;
-  }
-  Debug.add('info', 'در حال دریافت اطلاعات از سرور Supabase...');
-  try {
-    const {data, error} = await supabaseClient.from('baharan_data').select('data').eq('id','main').maybeSingle();
-    if(error) throw error;
-    if(data && data.data){
-      Debug.add('success', 'اطلاعات با موفقیت از سرور دریافت شد.');
-      db = Object.assign(DEF(), data.data);
-      db.settings = Object.assign(DEF().settings, data.data.settings);
-      if(sessionStorage.getItem('baharan_auth')==='1') render();
-    } else {
-      Debug.add('warn', 'هیچ اطلاعاتی روی سرور یافت نشد (جدول خالی است).');
-    }
-  } catch(e) { 
-    Debug.add('error', 'خطا در دریافت اطلاعات: ' + e.message); 
-  }
-}
-
+try{const r=JSON.parse(localStorage.getItem(KEY)||'null');if(r&&r.customers){db=Object.assign(DEF(),r);db.settings=Object.assign(DEF().settings,r.settings)}}catch(e){}
+const save=()=>{db._v=Date.now();try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast('خطا در ذخیره‌سازی','err')}
+if(supabaseClient&&!isPub())supabaseClient.from('baharan_data').upsert({id:'main',data:db,updated_at:new Date().toISOString()}).then(({error})=>error?Debug.add('error','ذخیره روی سرور ناموفق: '+error.message):Debug.add('success','ذخیره روی سرور انجام شد'),e=>Debug.add('error','خطای شبکه: '+e.message))};
+/* به‌روزرسانی ظاهر بدون خراب‌کردن فرم‌های در حال تایپ */
+const softRender=()=>{if(sessionStorage.getItem('baharan_auth')!=='1'||isPub())return;if(!$('#modal').hidden||cur==='inv'||(document.activeElement&&document.activeElement.id==='cq'))return;render()};
+async function loadCloudData(init){if(!supabaseClient||isPub())return;
+try{const{data,error}=await supabaseClient.from('baharan_data').select('data').eq('id','main').maybeSingle();if(error)throw error;const d=data&&data.data;
+if(!d){Debug.add('warn','روی سرور داده‌ای نیست؛ داده محلی ارسال شد');save();return}
+if(!init&&!(d._v>(db._v||0)))return;
+db=Object.assign(DEF(),d);db.settings=Object.assign(DEF().settings,d.settings);try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}
+Debug.add('success','اطلاعات از سرور به‌روز شد');softRender()}catch(e){Debug.add('error','خطا در دریافت اطلاعات: '+e.message)}}
+let refreshing=false;
+async function refreshAdmin(){if(refreshing||isPub()||!supabaseClient||sessionStorage.getItem('baharan_auth')!=='1')return;refreshing=true;try{await pull(true);await loadCloudData()}finally{refreshing=false}}
 const commit=()=>{save();render()};
 const cu=id=>db.customers.find(c=>c.id===id);
 const sv=()=>[...db.services].sort((a,b)=>(+a.done-+b.done)||a.createdAt-b.createdAt);
@@ -370,12 +209,12 @@ if(t.closest&&t.closest('#iform'))prev()});
 document.addEventListener('change',e=>{if(e.target.closest&&e.target.closest('#iform'))prev()});
 
 /* ===== ورود و مسیر ===== */
-const isPub=()=>location.hash==='#request'||new URLSearchParams(location.search).get('request')==='1';
-function route(){['loginView','publicView','app'].forEach(i=>$('#'+i).hidden=true);
+function isPub(){return location.hash==='#request'||new URLSearchParams(location.search).get('request')==='1'}
+function route(){$('#debugBtn').hidden=isPub();['loginView','publicView','app'].forEach(i=>$('#'+i).hidden=true);
 if(isPub()){$('#pubForm').innerHTML=fh(PF,{date:inDate(todayIso())});$('#publicView').hidden=false}
 else if(sessionStorage.getItem('baharan_auth')==='1'){$('#app').hidden=false;render()}
 else $('#loginView').hidden=false}
-function login(){if(en($('#lpass').value)===db.settings.password){sessionStorage.setItem('baharan_auth','1');Debug.add('success','مدیر با موفقیت وارد شد.');route()}else{toast('رمز عبور اشتباه است','err');Debug.add('warn','تلاش ناموفق برای ورود (رمز اشتباه).')}}
+function login(){if(en($('#lpass').value)===db.settings.password){sessionStorage.setItem('baharan_auth','1');route()}else toast('رمز عبور اشتباه است','err')}
 $('#lpass').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
 function logout(){sessionStorage.removeItem('baharan_auth');location.reload()}
 window.addEventListener('hashchange',route);
@@ -477,12 +316,13 @@ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h],{typ
 
 /* --- تنظیمات --- */
 function vSet(){const s=db.settings,l=location.origin==='null'||location.protocol==='file:'?location.href.split('#')[0]+'#request':location.origin+location.pathname+'#request';
-return`<div class="glass"><h2>لینک درخواست مشتریان</h2><input readonly id="lnk" value="${esc(l)}" dir="ltr" onclick="this.select()"><br><br><button class="btn" onclick="cpLink()">کپی لینک</button><button class="btn g" onclick="pull()">دریافت درخواست‌های جدید از سرور</button></div>
+return`<div class="glass"><h2>لینک درخواست مشتریان</h2><input readonly id="lnk" value="${esc(l)}" dir="ltr" onclick="this.select()"><br><br><button class="btn" onclick="cpLink()">کپی لینک</button><button class="btn g" onclick="pull()">دریافت درخواست‌ها از سرور</button></div>
 <div class="glass"><h2>تنظیمات فاکتور</h2><label>پیشوند شماره<input id="s_prefix" value="${esc(s.prefix)}" dir="ltr"></label><label>شماره بعدی<input id="s_next" class="num-input" inputmode="numeric" value="${fa(s.next)}"></label><label>شماره کارت (۱۶ رقم)<input id="s_card" class="num-input" inputmode="numeric" maxlength="16" value="${fa(s.card)}"></label><label>صاحب کارت<input id="s_owner" value="${esc(s.owner)}"></label><label>آدرس<textarea id="s_addr">${esc(s.address)}</textarea></label><button class="btn" onclick="saveSet()">ذخیره تنظیمات</button></div>
 <div class="glass"><h2>امنیت و دسترسی</h2><label>رمز عبور جدید<input type="password" id="s_pass"></label><button class="btn" onclick="chPass()">تغییر رمز عبور</button></div>
 <div class="glass"><h2>پشتیبان‌گیری و ریست</h2><button class="btn" onclick="bk()">دانلود پشتیبان JSON</button><label style="margin-top:12px">بازیابی از فایل<input type="file" accept=".json" onchange="rs(this)"></label><br><button class="btn d" onclick="resetAll()">ریست کل سایت</button></div>`}
-function resetAll(){if(!confirm('تمام اطلاعات (مشتریان، خدمات، مالی، فاکتورها و تنظیمات) حذف می‌شود. ادامه می‌دهید؟'))return;if(!confirm('این کار قابل بازگشت نیست. از اطلاعات یک فایل پشتیبان دانلود می‌شود. حذف نهایی انجام شود؟'))return;
-bk();setTimeout(()=>{try{localStorage.removeItem(KEY);sessionStorage.clear()}catch(e){}location.reload()},800)}
+async function resetAll(){if(!confirm('تمام اطلاعات (مشتریان، خدمات، مالی، فاکتورها و تنظیمات) از مرورگر و سرور حذف می‌شود. ادامه می‌دهید؟'))return;if(!confirm('این کار قابل بازگشت نیست. ابتدا یک فایل پشتیبان دانلود می‌شود. حذف نهایی انجام شود؟'))return;
+bk();try{if(supabaseClient){const{error}=await supabaseClient.from('baharan_data').upsert({id:'main',data:DEF(),updated_at:new Date().toISOString()});if(error)throw error;await supabaseClient.from('baharan_requests').delete().neq('id','00000000-0000-0000-0000-000000000000')}}catch(e){Debug.add('error','ریست سرور ناموفق: '+e.message);toast('ریست روی سرور انجام نشد','err');return}
+setTimeout(()=>{try{localStorage.removeItem(KEY);sessionStorage.clear()}catch(e){}location.reload()},800)}
 function cpLink(){const e=$('#lnk');e.select();try{navigator.clipboard.writeText(e.value).then(()=>toast('کپی شد'),()=>{document.execCommand('copy');toast('کپی شد')})}catch(x){document.execCommand('copy');toast('کپی شد')}}
 function saveSet(){const s=db.settings,c=en($('#s_card').value).replace(/\D/g,'');if(c&&c.length!==16){toast('شماره کارت باید ۱۶ رقم باشد','err');return}const n=parseInt(en($('#s_next').value))||1;
 Object.assign(s,{prefix:$('#s_prefix').value.trim(),next:Math.max(1,n),card:c,owner:$('#s_owner').value.trim(),address:$('#s_addr').value.trim()});save();toast('تنظیمات ذخیره شد')}
@@ -494,69 +334,36 @@ function rs(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload
 function addReq(o){let c=db.customers.find(x=>x.phone===o.phone);
 if(c)c.address=o.address;else{c={id:uid(),createdAt:Date.now(),name:o.name,phone:o.phone,address:o.address};db.customers.push(c)}
 db.services.push({id:uid(),createdAt:Date.now(),custId:c.id,service:o.service,date:o.date||todayIso(),desc:'',done:false,source:'online'})}
-
-async function pubSubmit(){
-  const o=fr(PF); if(!o) return; if(!o.date) o.date=todayIso();
-  
-  Debug.add('info', 'درخواست مشتری در حال ارسال به سرور...');
-  
-  if(supabaseClient){
-    try{
-      const { error } = await supabaseClient.from('baharan_requests').insert([{
-        name: o.name,
-        phone: o.phone,
-        address: o.address,
-        service: o.service,
-        date: o.date
-      }]);
-      if (error) throw error;
-      Debug.add('success', 'درخواست با موفقیت در دیتابیس ثبت شد.');
-    }catch(e){ 
-      Debug.add('error', 'خطا در ثبت درخواست: ' + e.message); 
-    }
-  }
-  
-  addReq(o); save();
-  $('#pubForm').innerHTML='<div class="empty">✅ درخواست شما ثبت شد. به‌زودی تماس می‌گیریم.</div>';
-  toast('درخواست ثبت شد');
-}
-
-async function pull(){
-  if(!supabaseClient){ toast('اتصال به سرور برقرار نیست','err'); Debug.add('error', 'سرور متصل نیست.'); return; }
-  Debug.add('info', 'در حال دریافت درخواست‌ها از سرور...');
-  try{
-    const {data, error} = await supabaseClient.from('baharan_requests').select('*');
-    if(error) throw error;
-    
-    let n=0;
-    (data||[]).forEach(o=>{
-      if(o && o.name && /^0\d{10}$/.test(o.phone||'') && o.service){
-        addReq(o); n++;
-      }
-    });
-    
-    if(n>0){
-      // پاک کردن درخواست‌های دریافت شده از سرور
-      const { error: delError } = await supabaseClient.from('baharan_requests').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-      if (delError) Debug.add('warn', 'خطا در پاکسازی درخواست‌های قدیمی: ' + delError.message);
-      Debug.add('success', `${n} درخواست جدید دریافت و به لیست اضافه شد.`);
-    } else {
-      Debug.add('info', 'هیچ درخواست جدیدی در سرور یافت نشد.');
-    }
-    
-    commit(); toast(fa(n)+' درخواست دریافت شد');
-  }catch(e){ 
-    Debug.add('error', 'خطا در دریافت درخواست‌ها: ' + e.message); 
-    toast('اتصال به سرور ناموفق بود','err'); 
-  }
-}
+let pubO=null,sending=false;
+const pubLock=v=>document.querySelectorAll('#pubForm input,#pubForm textarea').forEach(e=>e.disabled=v);
+function pubBack(){pubO=null;pubLock(false);$('#pubBtn').textContent='ثبت درخواست';$('#pubEdit').hidden=true}
+async function pubSubmit(){const b=$('#pubBtn');
+if(!pubO){const o=fr(PF);if(!o)return;if(!o.date)o.date=todayIso();pubO=o;pubLock(true);b.textContent='تایید';$('#pubEdit').hidden=false;return}
+if(sending)return;if(!supabaseClient){toast('اتصال به سرور برقرار نیست','err');return}
+sending=true;b.disabled=true;b.textContent='در حال ارسال...';
+try{const{error}=await supabaseClient.from('baharan_requests').insert([pubO]);if(error)throw error;
+$('#publicView').innerHTML='<div class="glass box"><div class="empty">✅ درخواست شما با موفقیت ثبت شد.<br>سپاس از شما؛ این صفحه بسته می‌شود.</div></div>';
+setTimeout(()=>{window.close();setTimeout(()=>location.replace('about:blank'),400)},1800)}
+catch(e){sending=false;b.disabled=false;b.textContent='تایید';Debug.add('error','ثبت درخواست ناموفق: '+(e.message||e));toast('ارسال ناموفق بود؛ دوباره تلاش کنید','err')}}
+let pulling=false;
+async function pull(silent){if(!supabaseClient){if(!silent)toast('اتصال به سرور برقرار نیست','err');return}
+if(pulling)return;pulling=true;
+try{const{data,error}=await supabaseClient.from('baharan_requests').select('id');if(error)throw error;
+if(!(data||[]).length){if(!silent)toast('درخواست جدیدی نیست');return}
+/* حذف و دریافت هم‌زمان: فقط ردیف‌های حذف‌شده وارد می‌شوند تا تکراری ثبت نشود */
+const{data:got,error:de}=await supabaseClient.from('baharan_requests').delete().in('id',data.map(x=>x.id)).select();if(de)throw de;
+const ok=(got||[]).filter(o=>o&&o.name&&/^0\d{10}$/.test(o.phone||'')&&o.service);
+if(ok.length){ok.forEach(addReq);save();softRender();toast(fa(ok.length)+' درخواست جدید دریافت شد');Debug.add('success',ok.length+' درخواست جدید دریافت شد')}}
+catch(e){Debug.add('error','خطا در دریافت درخواست‌ها: '+e.message);if(!silent)toast('اتصال به سرور ناموفق بود','err')}finally{pulling=false}}
+/* همگام‌سازی زنده برای مدیر */
+if(supabaseClient&&!isPub()){const rt=()=>refreshAdmin();
+supabaseClient.channel('admin_sync').on('postgres_changes',{event:'*',schema:'public',table:'baharan_requests'},rt).on('postgres_changes',{event:'*',schema:'public',table:'baharan_data'},rt).subscribe(st=>Debug.add(st==='SUBSCRIBED'?'success':'info','همگام‌سازی زنده: '+st));
+setInterval(rt,10000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)rt()})}
 
 /* ===== PWA ===== */
 if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0)navigator.serviceWorker.register('sw.js').catch(()=>{});
-
-// شروع برنامه
 route();
-loadCloudData(); // دریافت اطلاعات از سرور موقع باز شدن سایت
+loadCloudData(true).then(refreshAdmin);
 </script>
 </body>
 </html>
