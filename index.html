@@ -8,6 +8,8 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>دفتر خدمات فنی و مهندسی بهاران تصفیه</title>
+<!-- اضافه شدن کتابخانه Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style id="invcss">
 .inv{position:relative;width:794px;min-height:1123px;margin:0 auto;background:#fff;color:#111;font-family:Tahoma,Arial,sans-serif;direction:rtl;padding:175px 48px 150px;box-sizing:border-box;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .inv .wv{position:absolute;left:0;width:100%;height:150px}.inv .wt{top:0}.inv .wb{bottom:0;transform:scaleY(-1)}
@@ -99,9 +101,13 @@ body.print-preview>*:not(#pv){display:none!important}.pvbar{display:none}#pv{pos
 
 <script>
 'use strict';
+/* ===== تنظیمات Supabase ===== */
+const SUPABASE_URL = 'https://lovgxgphwbumjcuwqsba.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxvdmd4Z3Bod2J1bWpjdXdxc2JhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ1NDUyODIsImV4cCI6MjExMDEyMTI4Mn0.fElB1vCYOaFQ8-k8K91d87aPOXLXdMp9XUoo7ozMgik';
+const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
 /* ===== تنظیمات پایه ===== */
 const KEY='baharan_office_v1';
-const SERVER_URL=''; // آدرس سرور اختیاری: ثبت درخواست‌ها با POST و دریافت با GET ?action=list
 const $=s=>document.querySelector(s);
 const FA='۰۱۲۳۴۵۶۷۸۹';
 const fa=s=>String(s).replace(/\d/g,d=>FA[d]);
@@ -125,7 +131,28 @@ function parseJ(s){const p=en(s).split('/').map(Number);if(p.length!==3||p.some(
 const DEF=()=>({customers:[],services:[],income:[],invoices:[],settings:{password:'123456',prefix:'BH-',next:1,card:'',owner:'',address:'قم پردیسان بلوار امام صادق، خیابان اندیشه.'}});
 let db=DEF();
 try{const r=JSON.parse(localStorage.getItem(KEY)||'null');if(r&&r.customers){db=Object.assign(DEF(),r);db.settings=Object.assign(DEF().settings,r.settings)}}catch(e){}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast('خطا در ذخیره‌سازی','err')}};
+
+// ذخیره‌سازی همزمان در مرورگر و سرور Supabase
+const save=()=>{
+  try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast('خطا در ذخیره‌سازی','err')}
+  if(supabaseClient){
+    supabaseClient.from('baharan_data').upsert({id:'main',data:db,updated_at:new Date().toISOString()}).then(({error})=>{if(error)console.error('Supabase Save Error:',error)});
+  }
+};
+
+// دریافت اطلاعات از Supabase هنگام باز شدن سایت
+async function loadCloudData(){
+  if(!supabaseClient) return;
+  try {
+    const {data, error} = await supabaseClient.from('baharan_data').select('data').eq('id','main').maybeSingle();
+    if(data && data.data){
+      db = Object.assign(DEF(), data.data);
+      db.settings = Object.assign(DEF().settings, data.data.settings);
+      if(sessionStorage.getItem('baharan_auth')==='1') render();
+    }
+  } catch(e) { console.error('Cloud Load Error:', e); }
+}
+
 const commit=()=>{save();render()};
 const cu=id=>db.customers.find(c=>c.id===id);
 const sv=()=>[...db.services].sort((a,b)=>(+a.done-+b.done)||a.createdAt-b.createdAt);
@@ -273,7 +300,7 @@ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h],{typ
 
 /* --- تنظیمات --- */
 function vSet(){const s=db.settings,l=location.origin==='null'||location.protocol==='file:'?location.href.split('#')[0]+'#request':location.origin+location.pathname+'#request';
-return`<div class="glass"><h2>لینک درخواست مشتریان</h2><input readonly id="lnk" value="${esc(l)}" dir="ltr" onclick="this.select()"><br><br><button class="btn" onclick="cpLink()">کپی لینک</button>${SERVER_URL?'<button class="btn g" onclick="pull()">دریافت از سرور</button>':''}</div>
+return`<div class="glass"><h2>لینک درخواست مشتریان</h2><input readonly id="lnk" value="${esc(l)}" dir="ltr" onclick="this.select()"><br><br><button class="btn" onclick="cpLink()">کپی لینک</button><button class="btn g" onclick="pull()">دریافت درخواست‌های جدید از سرور</button></div>
 <div class="glass"><h2>تنظیمات فاکتور</h2><label>پیشوند شماره<input id="s_prefix" value="${esc(s.prefix)}" dir="ltr"></label><label>شماره بعدی<input id="s_next" class="num-input" inputmode="numeric" value="${fa(s.next)}"></label><label>شماره کارت (۱۶ رقم)<input id="s_card" class="num-input" inputmode="numeric" maxlength="16" value="${fa(s.card)}"></label><label>صاحب کارت<input id="s_owner" value="${esc(s.owner)}"></label><label>آدرس<textarea id="s_addr">${esc(s.address)}</textarea></label><button class="btn" onclick="saveSet()">ذخیره تنظیمات</button></div>
 <div class="glass"><h2>امنیت و دسترسی</h2><label>رمز عبور جدید<input type="password" id="s_pass"></label><button class="btn" onclick="chPass()">تغییر رمز عبور</button></div>
 <div class="glass"><h2>پشتیبان‌گیری و ریست</h2><button class="btn" onclick="bk()">دانلود پشتیبان JSON</button><label style="margin-top:12px">بازیابی از فایل<input type="file" accept=".json" onchange="rs(this)"></label><br><button class="btn d" onclick="resetAll()">ریست کل سایت</button></div>`}
@@ -290,14 +317,53 @@ function rs(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload
 function addReq(o){let c=db.customers.find(x=>x.phone===o.phone);
 if(c)c.address=o.address;else{c={id:uid(),createdAt:Date.now(),name:o.name,phone:o.phone,address:o.address};db.customers.push(c)}
 db.services.push({id:uid(),createdAt:Date.now(),custId:c.id,service:o.service,date:o.date||todayIso(),desc:'',done:false,source:'online'})}
-async function pubSubmit(){const o=fr(PF);if(!o)return;if(!o.date)o.date=todayIso();
-if(SERVER_URL){try{const r=await fetch(SERVER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)});if(!r.ok)throw 0}catch(e){}}
-addReq(o);save();$('#pubForm').innerHTML='<div class="empty">✅ درخواست شما ثبت شد. به‌زودی تماس می‌گیریم.</div>';toast('درخواست ثبت شد')}
-async function pull(){try{const r=await fetch(SERVER_URL+'?action=list'),a=await r.json();let n=0;(Array.isArray(a)?a:[]).forEach(o=>{if(o&&o.name&&/^0\d{10}$/.test(o.phone||'')&&o.service){addReq(o);n++}});commit();toast(fa(n)+' درخواست دریافت شد')}catch(e){toast('اتصال به سرور ناموفق بود','err')}}
+
+async function pubSubmit(){
+  const o=fr(PF); if(!o) return; if(!o.date) o.date=todayIso();
+  
+  // ارسال مستقیم به دیتابیس Supabase
+  if(supabaseClient){
+    try{
+      await supabaseClient.from('baharan_requests').insert([{
+        name: o.name,
+        phone: o.phone,
+        address: o.address,
+        service: o.service,
+        date: o.date
+      }]);
+    }catch(e){ console.error(e); }
+  }
+  
+  addReq(o); save();
+  $('#pubForm').innerHTML='<div class="empty">✅ درخواست شما ثبت شد. به‌زودی تماس می‌گیریم.</div>';
+  toast('درخواست ثبت شد');
+}
+
+async function pull(){
+  if(!supabaseClient){ toast('اتصال به سرور برقرار نیست','err'); return; }
+  try{
+    const {data, error} = await supabaseClient.from('baharan_requests').select('*');
+    if(error) throw error;
+    let n=0;
+    (data||[]).forEach(o=>{
+      if(o && o.name && /^0\d{10}$/.test(o.phone||'') && o.service){
+        addReq(o); n++;
+      }
+    });
+    if(n>0){
+      // پاک کردن درخواست‌های دریافت شده از سرور
+      await supabaseClient.from('baharan_requests').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+    }
+    commit(); toast(fa(n)+' درخواست دریافت شد');
+  }catch(e){ toast('اتصال به سرور ناموفق بود','err'); }
+}
 
 /* ===== PWA ===== */
 if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0)navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+// شروع برنامه
 route();
+loadCloudData(); // دریافت اطلاعات از سرور موقع باز شدن سایت
 </script>
 </body>
 </html>
