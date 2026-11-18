@@ -10,8 +10,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <title>دفتر خدمات فنی و مهندسی بهاران تصفیه</title>
 <style id="invcss">
-.inv{position:relative;width:794px;min-height:1123px;margin:0 auto;background:#fff;color:#111;font-family:Tahoma,Arial,sans-serif;direction:rtl;padding:175px 48px 150px;box-sizing:border-box;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.inv .wv{position:absolute;left:0;width:100%;height:150px}.inv .wt{top:0}.inv .wb{bottom:0;transform:scaleY(-1)}
+.inv{position:relative;display:flex;flex-direction:column;width:210mm;height:296mm;margin:0 auto;background:#fff;color:#111;font-family:Tahoma,Arial,sans-serif;direction:rtl;padding:30mm 13mm 105px;box-sizing:border-box;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.inv .wv{position:absolute;left:0;width:100%}.inv .wt{top:0;height:105px}.inv .wb{bottom:0;height:112px;transform:scaleY(-1)}.inv .ct{position:relative;flex:1;min-height:0;overflow:hidden}.inv .in{transform-origin:top right}
 .inv h3{margin:0;text-align:center;color:#6b7f99;font-size:22px;font-weight:700}
 .inv h1{margin:0;font-size:32px;font-weight:700}
 .inv .top{display:flex;justify-content:space-between;align-items:center;margin:10px 0 18px}
@@ -46,7 +46,7 @@ h2{margin:0 0 10px;font-size:16px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}
 .st{border-radius:18px;padding:14px;color:#fff;background:linear-gradient(135deg,#3b82f6,#8b5cf6)}.st:nth-child(2){background:linear-gradient(135deg,#f59e0b,#ef4444)}.st:nth-child(3){background:linear-gradient(135deg,#10b981,#14b8a6)}.st:nth-child(4){background:linear-gradient(135deg,#6366f1,#0ea5e9)}
 .st small{display:block;opacity:.9}.st b{font-size:20px}
-.tw{overflow-x:auto;overscroll-behavior:contain;border-radius:14px;scrollbar-width:thin;max-width:100%}
+.tw{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;overscroll-behavior-y:auto;touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;border-radius:14px;scrollbar-width:thin;max-width:100%}
 table{border-collapse:collapse;width:100%;font-size:13px}
 .tw th,.tw td{padding:9px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid rgba(0,0,0,.07)}
 .tw th{background:#e0e9f9}
@@ -84,6 +84,13 @@ body.print-preview #pv{display:block}
 #debugLogs{flex:1;overflow-y:auto;padding:10px}
 .log-row{padding:4px 6px;border-bottom:1px solid #1e293b;word-break:break-all}.log-row.success{color:#4ade80}.log-row.error{color:#f87171}.log-row.warn{color:#fbbf24}
 .log-time{color:#64748b;margin-left:6px}
+main.fx{overflow:hidden;display:flex;flex-direction:column}
+main.fx>.glass{flex:1;min-height:0;display:flex;flex-direction:column;margin-bottom:0}
+main.fx .glass>.bar,main.fx .glass>input,main.fx .tot{flex-shrink:0}
+main.fx .glass>input{margin:0 0 10px}
+main.fx #cTbl,main.fx #fTbl{flex:1;min-height:0;display:flex;flex-direction:column}
+main.fx .tw{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;touch-action:auto}
+main.fx .tw th{position:sticky;top:0;z-index:2}main.fx .tw th:first-child{z-index:3;background:#e0e9f9}
 @media(max-width:760px){.g2{grid-template-columns:1fr}.bub{filter:none;opacity:.25}.glass,header,.tabs{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,255,255,.92)}}
 @media print{@page{size:A4;margin:0}html,body{height:auto!important;overflow:visible!important;background:#fff}
 body.print-preview>*:not(#pv){display:none!important}.pvbar{display:none}#pv{position:static;overflow:visible;background:#fff}.pvbody{padding:0}.inv{zoom:1!important}}
@@ -198,7 +205,7 @@ o[f.k]=v}return o}
 const CF=[{k:'name',l:'نام',r:1},{k:'phone',l:'شماره تماس',t:'tel',r:1},{k:'address',l:'آدرس',t:'area',r:1}];
 const SF=[{k:'name',l:'نام مشتری',r:1,list:'cl'},{k:'phone',l:'شماره تماس',t:'tel',r:1},{k:'address',l:'آدرس',t:'area',r:1},{k:'service',l:'خدمت',r:1},{k:'date',l:'تاریخ',t:'date',r:1},{k:'desc',l:'توضیحات',t:'area'}];
 const IF=[{k:'desc',l:'شرح',r:1},{k:'amount',l:'مبلغ (تومان)',t:'num',r:1},{k:'date',l:'تاریخ',t:'date',r:1},{k:'name',l:'مشتری (اختیاری)',list:'cl'}];
-const PF=[{k:'name',l:'نام',r:1},{k:'phone',l:'شماره تماس',t:'tel',r:1},{k:'address',l:'آدرس',t:'area',r:1},{k:'service',l:'خدمت درخواستی',r:1},{k:'date',l:'تاریخ',t:'date'}];
+const PF=[{k:'name',l:'نام',r:1},{k:'phone',l:'شماره تماس',t:'tel',r:1},{k:'address',l:'آدرس',t:'area',r:1},{k:'service',l:'خدمت درخواستی',r:1},{k:'description',l:'توضیحات (اختیاری)',t:'area'},{k:'date',l:'تاریخ',t:'date'}];
 
 /* ماسک‌ها: ارقام فارسی و تاریخ */
 document.addEventListener('input',e=>{const t=e.target;
@@ -221,8 +228,8 @@ window.addEventListener('hashchange',route);
 
 /* ===== تب‌ها ===== */
 const T=[['dash','داشبورد'],['cust','مشتریان'],['svc','خدمات'],['fin','مالی'],['inv','فاکتور'],['set','لینک و تنظیمات']];
-let cur='dash',custQ='',editInv=null;
-function render(){if(cur!='inv')editInv=null;$('#tabs').innerHTML=T.map(t=>`<button class="${t[0]==cur?'on':''}" onclick="cur='${t[0]}';render()">${t[1]}</button>`).join('');
+let cur='dash',custQ='',finQ='',editInv=null;
+function render(){if(cur!='inv')editInv=null;$('#main').className=['cust','svc','fin'].includes(cur)?'fx':'';$('#tabs').innerHTML=T.map(t=>`<button class="${t[0]==cur?'on':''}" onclick="cur='${t[0]}';render()">${t[1]}</button>`).join('');
 $('#main').innerHTML=({dash:vDash,cust:vCust,svc:vSvc,fin:vFin,inv:vInv,set:vSet})[cur]();
 if(cur=='inv')initInv();$('#main').scrollTop=0;refreshDL()}
 const tbl=(h,r,em)=>r.length?`<div class="tw"><table><thead><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${r.join('')}</tbody></table></div>`:`<div class="empty">${em||'موردی ثبت نشده است'}</div>`;
@@ -233,7 +240,7 @@ return`<div class="stats"><div class="st"><small>تعداد مشتریان</smal
 <div class="glass"><h2>نوبت‌های در انتظار</h2>${tbl(['اولویت','مشتری','خدمت','تاریخ'],p.map((s,i)=>{const c=cu(s.custId)||{};return`<tr><td>${fa(i+1)}</td><td><a class="lk" onclick="editCust('${s.custId}')">${esc(c.name)}</a></td><td>${esc(s.service)}</td><td>${showDate(s.date)}</td></tr>`}),'نوبت در انتظاری وجود ندارد')}</div>`}
 
 /* --- مشتریان --- */
-function vCust(){return`<div class="glass"><div class="bar"><h2>مشتریان</h2><button class="btn" onclick="editCust()">+ مشتری جدید</button></div><input id="cq" placeholder="جستجو با نام یا شماره تماس" value="${esc(custQ)}" oninput="custQ=this.value;$('#cTbl').innerHTML=custTbl()"><br><br><div id="cTbl">${custTbl()}</div></div>`}
+function vCust(){return`<div class="glass"><div class="bar"><h2>مشتریان</h2><button class="btn" onclick="editCust()">+ مشتری جدید</button></div><input id="cq" placeholder="جستجو با نام یا شماره تماس" value="${esc(custQ)}" oninput="custQ=this.value;$('#cTbl').innerHTML=custTbl()"><div id="cTbl">${custTbl()}</div></div>`}
 function custTbl(){const q=custQ.trim(),qd=en(q).replace(/\D/g,'');return tbl(['#','نام','شماره تماس','آدرس','تاریخ ثبت','تعداد خدمات','آخرین عملیات','عملیات'],db.customers.filter(c=>!q||c.name.includes(q)||(qd&&c.phone.includes(qd))).map((c,i)=>{const ds=[...db.services.filter(s=>s.custId===c.id).map(s=>s.date),...db.invoices.filter(s=>s.custId===c.id).map(s=>s.date)].sort();
 return`<tr><td>${fa(i+1)}</td><td>${esc(c.name)}</td><td>${fa(c.phone)}</td><td>${esc(c.address)}</td><td>${showDate(new Date(c.createdAt).toISOString().slice(0,10))}</td><td>${fa(db.services.filter(s=>s.custId===c.id).length)}</td><td>${ds.length?showDate(ds[ds.length-1]):'—'}</td><td class="ac"><button onclick="editCust('${c.id}')">ویرایش</button><button class="d" onclick="delCust('${c.id}')">حذف</button></td></tr>`}),'مشتری‌ای یافت نشد')}
 function editCust(id){const c=id?cu(id):null;openM(c?'ویرایش مشتری':'مشتری جدید',fh(CF,c?{...c,phone:fa(c.phone)}:{}),()=>{const o=fr(CF);if(!o)return;
@@ -242,8 +249,8 @@ if(c)Object.assign(c,o);else db.customers.push({id:uid(),createdAt:Date.now(),..
 function delCust(id){if(!confirm('مشتری و خدمات او حذف شود؟'))return;db.customers=db.customers.filter(c=>c.id!==id);db.services=db.services.filter(s=>s.custId!==id);commit();toast('حذف شد')}
 
 /* --- خدمات --- */
-function vSvc(){return`<div class="glass"><div class="bar"><h2>خدمات</h2><button class="btn" onclick="editSvc()">+ ثبت خدمت</button></div>${tbl(['اولویت','نام مشتری','شماره تماس','خدمت درخواستی','تاریخ درخواست','وضعیت','منبع','عملیات'],sv().map((s,i)=>{const c=cu(s.custId)||{};
-return`<tr><td>${fa(i+1)}</td><td>${esc(c.name)}</td><td>${fa(c.phone||'')}</td><td>${esc(s.service)}</td><td>${showDate(s.date)}</td><td><span class="bd ${s.done?'ok':'wt'}">${s.done?'انجام‌شده':'در انتظار'}</span></td><td>${s.source}</td><td class="ac"><button class="g" onclick="tg('${s.id}')">تغییر وضعیت</button><button onclick="editSvc('${s.id}')">ویرایش</button><button class="d" onclick="delSvc('${s.id}')">حذف</button></td></tr>`}))}</div>`}
+function vSvc(){return`<div class="glass"><div class="bar"><h2>خدمات</h2><button class="btn" onclick="editSvc()">+ ثبت خدمت</button></div>${tbl(['اولویت','نام مشتری','شماره تماس','خدمت درخواستی','توضیحات','تاریخ درخواست','وضعیت','منبع','عملیات'],sv().map((s,i)=>{const c=cu(s.custId)||{};
+return`<tr><td>${fa(i+1)}</td><td>${esc(c.name)}</td><td>${fa(c.phone||'')}</td><td>${esc(s.service)}</td><td style="white-space:normal;min-width:150px">${esc(s.desc||'—')}</td><td>${showDate(s.date)}</td><td><span class="bd ${s.done?'ok':'wt'}">${s.done?'انجام‌شده':'در انتظار'}</span></td><td>${s.source}</td><td class="ac"><button class="g" onclick="tg('${s.id}')">تغییر وضعیت</button><button onclick="editSvc('${s.id}')">ویرایش</button><button class="d" onclick="delSvc('${s.id}')">حذف</button></td></tr>`}))}</div>`}
 function tg(id){const s=db.services.find(x=>x.id===id);s.done=!s.done;commit()}
 function delSvc(id){if(!confirm('این خدمت حذف شود؟'))return;db.services=db.services.filter(s=>s.id!==id);commit()}
 function editSvc(id){const s=id?db.services.find(x=>x.id===id):null,c=s?cu(s.custId):null;
@@ -253,25 +260,32 @@ if(!k){k={id:uid(),createdAt:Date.now(),name:o.name,phone:o.phone,address:o.addr
 const r=s||{id:uid(),createdAt:Date.now(),source:'manual',done:false};Object.assign(r,{custId:k.id,service:o.service,date:o.date,desc:o.desc});if(!s)db.services.push(r);closeM();commit();toast('ذخیره شد')},true)}
 
 /* --- مالی --- */
-function vFin(){const t=db.income.reduce((a,b)=>a+b.amount,0);
-return`<div class="glass"><div class="bar"><h2>درآمدها</h2><button class="btn" onclick="addInc()">+ ثبت درآمد</button></div>${tbl(['تاریخ','شرح','مشتری','مبلغ (تومان)','منبع','عملیات'],[...db.income].sort((a,b)=>b.date.localeCompare(a.date)).map(r=>`<tr><td>${showDate(r.date)}</td><td>${esc(r.desc)}</td><td>${esc((cu(r.custId)||{}).name||'—')}</td><td>${money(r.amount)}</td><td>${r.source=='invoice'?'فاکتور':'دستی'}</td><td class="ac"><button class="d" onclick="delInc('${r.id}')">حذف</button></td></tr>`))}
-<div class="tot">مجموع درآمد: ${money(t)} تومان</div></div>`}
+const finList=()=>{const q=finQ.trim();return[...db.income].filter(x=>!q||((cu(x.custId)||{}).name||'').includes(q)).sort((a,b)=>b.date.localeCompare(a.date))};
+function finTbl(){return tbl(['تاریخ','شرح','مشتری','مبلغ (تومان)','منبع','عملیات'],finList().map(x=>`<tr><td>${showDate(x.date)}</td><td>${esc(x.desc)}</td><td>${esc((cu(x.custId)||{}).name||'—')}</td><td>${money(x.amount)}</td><td>${x.source=='invoice'?'فاکتور':'دستی'}</td><td class="ac"><button class="d" onclick="delInc('${x.id}')">حذف</button></td></tr>`),'درآمدی یافت نشد')}
+function finTot(){const t=db.income.reduce((a,b)=>a+b.amount,0);return'مجموع درآمد: '+money(t)+' تومان'+(finQ.trim()?' — مجموع نتایج جستجو: '+money(finList().reduce((a,b)=>a+b.amount,0))+' تومان':'')}
+function vFin(){return`<div class="glass"><div class="bar"><h2>درآمدها</h2><button class="btn" onclick="addInc()">+ ثبت درآمد</button></div><input id="fq" placeholder="جستجو با نام مشتری" value="${esc(finQ)}" oninput="finQ=this.value;$('#fTbl').innerHTML=finTbl();$('#fTot').textContent=finTot()"><div id="fTbl">${finTbl()}</div><div class="tot" id="fTot">${finTot()}</div></div>`}
 function addInc(){openM('ثبت درآمد',fh(IF,{date:inDate(todayIso())}),()=>{const o=fr(IF);if(!o)return;if(o.amount<=0){toast('مبلغ باید بیشتر از صفر باشد','err');return}
 const c=o.name?db.customers.find(x=>x.name===o.name):null;db.income.push({id:uid(),date:o.date,desc:o.desc,amount:o.amount,custId:c?c.id:'',source:'manual'});closeM();commit();toast('ثبت شد')})}
 function delInc(id){if(!confirm('این درآمد حذف شود؟'))return;db.income=db.income.filter(r=>r.id!==id);commit()}
 
 /* --- فاکتور --- */
 function invHTML(o){const rows=o.items.map((it,i)=>`<tr><td>${fa(i+1)}</td><td class="l">${esc(it.d)}</td><td>${fa(it.q)}</td><td>${money(it.p)}</td><td>${money(it.q*it.p)}</td></tr>`);
-for(let i=rows.length;i<8;i++)rows.push('<tr>'+'<td>&nbsp;</td>'.repeat(5)+'</tr>');
+for(let i=rows.length;i<12;i++)rows.push('<tr>'+'<td>&nbsp;</td>'.repeat(5)+'</tr>');
 const st=db.settings,card=fa(String(st.card||'').replace(/(\d{4})(?=\d)/g,'$1 '));
 return`<div class="inv"><svg class="wv wt" viewBox="0 0 800 150" preserveAspectRatio="none"><path d="M0 0H800V70C620 40 500 130 300 105S80 85 0 125Z" fill="#0b6fb8"/><path d="M0 0H800V35C600 15 480 95 300 82S60 62 0 102Z" fill="#4cc3ff" opacity=".85"/></svg>
 <svg class="wv wb" viewBox="0 0 800 150" preserveAspectRatio="none"><path d="M0 0H800V70C620 40 500 130 300 105S80 85 0 125Z" fill="#0b6fb8"/><path d="M0 0H800V35C600 15 480 95 300 82S60 62 0 102Z" fill="#4cc3ff" opacity=".85"/></svg>
-<h3>فاکتور فروش</h3><div class="top"><h1>دفتر خدمات فنی بهاران تصفیه</h1><div class="mt">شماره فاکتور: ${esc(fa(o.no))}<br>تاریخ: ${o.date?inDate(o.date):''}</div></div>
+<div class="ct"><div class="in"><h3>فاکتور فروش</h3><div class="top"><h1>دفتر خدمات فنی بهاران تصفیه</h1><div class="mt">شماره فاکتور: ${esc(fa(o.no))}<br>تاریخ: ${o.date?inDate(o.date):''}</div></div>
 <div class="to">فاکتور ارائه شده به آقا/خانم ${esc(o.name)}</div>
 <table><colgroup><col style="width:8%"><col style="width:40%"><col style="width:10%"><col style="width:21%"><col style="width:21%"></colgroup><thead><tr><th>ردیف</th><th>شرح کالا</th><th>تعداد</th><th>واحد (قیمت)</th><th>مبلغ</th></tr></thead><tbody>${rows.join('')}</tbody></table>
 <table class="sum" style="margin-top:4px"><tr><td>اجرت نصب و خدمات: ${money(o.labor)} تومان</td></tr>${o.disc?`<tr><td>تخفیف: ${money(o.disc)} تومان</td></tr>`:''}${o.taxp?`<tr><td>مالیات (${fa(o.taxp)}٪): ${money(o.tax)} تومان</td></tr>`:''}<tr><td><b>جمع مبلغ کل: ${money(o.total)} تومان</b></td></tr></table>
 ${o.notes?`<div class="nt">توضیحات: ${esc(o.notes)}</div>`:''}
-<div class="ft"><div>آدرس: ${esc(st.address)}<br>شماره کارت: <bdi dir="ltr">${card}</bdi>${st.owner?' — به نام '+esc(st.owner):''}</div><div>امضا مدیر:</div></div></div>`}
+<div class="ft"><div>آدرس: ${esc(st.address)}<br>شماره کارت: <bdi dir="ltr">${card}</bdi>${st.owner?' — به نام '+esc(st.owner):''}</div><div>امضا مدیر:</div></div></div></div></div>`}
+/* جا دادن هوشمند محتوا در یک صفحه A4: در صورت زیاد بودن اقلام، محتوا کوچک می‌شود */
+function fitInv(r){if(!r)return;const c=r.querySelector('.ct'),i=r.querySelector('.in');if(!c||!i)return;
+i.style.transform='';i.style.width='';let s=1;
+for(let k=0;k<7;k++){const h=i.offsetHeight,ch=c.clientHeight;if(!h||!ch)return;const n=Math.max(.45,Math.min(1,ch/h*.99));if(k>0&&Math.abs(n-s)<.004)break;s=n;
+if(s<1){i.style.width=(100/s)+'%';i.style.transform='scale('+s+')'}else{i.style.width='';i.style.transform=''}}
+if(s<1&&s*i.offsetHeight>c.clientHeight){s=Math.max(.4,c.clientHeight/i.offsetHeight*.98);i.style.width=(100/s)+'%';i.style.transform='scale('+s+')'}}
 function calc(items,labor,disc,taxp){const sub=items.reduce((a,i)=>a+i.q*i.p,0),base=Math.max(0,sub+labor-disc),tax=Math.round(base*taxp/100);return{sub,tax,total:base+tax}}
 function vInv(){return`<div class="g2"><div class="glass" id="iform"><h2>${editInv?'ویرایش فاکتور':'ساخت فاکتور'}</h2>
 <label>منبع مشتری<select id="iMode" onchange="fillCust()"><option value="s">خدمات در انتظار</option><option value="c">بانک مشتریان</option></select></label>
@@ -300,7 +314,7 @@ const items=[...document.querySelectorAll('#iItems .irow')].map(r=>{const i=r.qu
 const labor=num('#iLab'),disc=num('#iDis'),taxp=num('#iTax'),r=calc(items,labor,disc,taxp);
 const ev=editInv&&db.invoices.find(x=>x.id===editInv);
 return{no:ev?ev.no:db.settings.prefix+db.settings.next,date:parseJ($('#iDate').value)||'',name:c?c.name:'',custId:c?c.id:'',serviceId:svc?svc.id:(ev?ev.serviceId:''),items,labor,disc,taxp,notes:$('#iNote').value.trim(),...r}}
-function prev(){const e=$('#iPrev');if(!e||cur!=='inv')return;e.innerHTML=invHTML(collect());const w=e.clientWidth;e.firstChild.style.zoom=Math.min(1,(w||794)/794)}
+function prev(){const e=$('#iPrev');if(!e||cur!=='inv')return;e.innerHTML=invHTML(collect());const w=e.clientWidth;e.firstChild.style.zoom=Math.min(1,(w||794)/794);fitInv(e.firstChild)}
 function saveInv(){const o=collect();if(!o.custId){toast('مشتری را انتخاب کنید','err');return}if(!o.date){toast('تاریخ شمسی معتبر نیست','err');return}
 if(!o.items.length&&!o.labor){toast('حداقل یک قلم یا اجرت وارد کنید','err');return}
 const ev=editInv&&db.invoices.find(x=>x.id===editInv);
@@ -309,9 +323,11 @@ const v={id:uid(),createdAt:Date.now(),...o};db.invoices.push(v);db.income.push(
 const s=db.services.find(x=>x.id===o.serviceId);if(s)s.done=true;db.settings.next++;commit();toast('فاکتور ذخیره و درآمد ثبت شد')}
 function printCur(){const o=collect();if(!o.custId){toast('ابتدا مشتری را انتخاب کنید','err');return}showPV(invHTML(o))}
 function printSaved(id){showPV(invHTML(db.invoices.find(v=>v.id===id)))}
-function showPV(h){$('#pvb').innerHTML=h;$('#pvb').firstChild.style.zoom=Math.min(1,innerWidth/800);document.body.classList.add('print-preview')}
+function showPV(h){$('#pvb').innerHTML=h;$('#pvb').firstChild.style.zoom=Math.min(1,innerWidth/800);document.body.classList.add('print-preview');fitInv($('#pvb').firstChild)}
+window.addEventListener('beforeprint',()=>{const e=$('#pvb .inv');if(e){e.style.zoom=1;fitInv(e)}});
+window.addEventListener('afterprint',()=>{const e=$('#pvb .inv');if(e){e.style.zoom=Math.min(1,innerWidth/800);fitInv(e)}});
 function closePV(){document.body.classList.remove('print-preview')}
-function dlInv(){const css=$('#invcss').textContent+'body{margin:0;background:#fff}@page{size:A4;margin:0}',h='<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>فاکتور</title><style>'+css+'</style></head><body>'+$('#pvb').innerHTML.replace(/zoom:[^;"]*;?/,'')+'</body></html>';
+function dlInv(){const css=$('#invcss').textContent+'body{margin:0;background:#fff}@page{size:A4;margin:0}',h='<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>فاکتور</title><style>'+css+'</style></head><body>'+$('#pvb').innerHTML.replace(/zoom:[^;"]*;?/,'')+'<script>'+fitInv.toString()+';var f=function(){fitInv(document.querySelector(".inv"))};addEventListener("load",f);addEventListener("beforeprint",f)<\/script></body></html>';
 const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h],{type:'text/html'}));a.download='invoice-'+Date.now()+'.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
 
 /* --- تنظیمات --- */
@@ -333,7 +349,7 @@ function rs(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload
 /* ===== فرم عمومی و سرور ===== */
 function addReq(o){let c=db.customers.find(x=>x.phone===o.phone);
 if(c)c.address=o.address;else{c={id:uid(),createdAt:Date.now(),name:o.name,phone:o.phone,address:o.address};db.customers.push(c)}
-db.services.push({id:uid(),createdAt:Date.now(),custId:c.id,service:o.service,date:o.date||todayIso(),desc:'',done:false,source:'online'})}
+db.services.push({id:uid(),createdAt:Date.now(),custId:c.id,service:o.service,date:o.date||todayIso(),desc:o.description||o.desc||'',done:false,source:'online'})}
 let pubO=null,sending=false;
 const pubLock=v=>document.querySelectorAll('#pubForm input,#pubForm textarea').forEach(e=>e.disabled=v);
 function pubBack(){pubO=null;pubLock(false);$('#pubBtn').textContent='ثبت درخواست';$('#pubEdit').hidden=true}
@@ -341,7 +357,9 @@ async function pubSubmit(){const b=$('#pubBtn');
 if(!pubO){const o=fr(PF);if(!o)return;if(!o.date)o.date=todayIso();pubO=o;pubLock(true);b.textContent='تایید';$('#pubEdit').hidden=false;return}
 if(sending)return;if(!supabaseClient){toast('اتصال به سرور برقرار نیست','err');return}
 sending=true;b.disabled=true;b.textContent='در حال ارسال...';
-try{const{error}=await supabaseClient.from('baharan_requests').insert([pubO]);if(error)throw error;
+try{let{error}=await supabaseClient.from('baharan_requests').insert([pubO]);
+if(error&&/description|column/i.test(error.message)){const{description,...rest}=pubO;Debug.add('warn','ستون description در سرور نیست؛ بدون توضیحات ارسال شد');({error}=await supabaseClient.from('baharan_requests').insert([rest]))}
+if(error)throw error;
 $('#publicView').innerHTML='<div class="glass box"><div class="empty">✅ درخواست شما با موفقیت ثبت شد.<br>سپاس از شما؛ این صفحه بسته می‌شود.</div></div>';
 setTimeout(()=>{window.close();setTimeout(()=>location.replace('about:blank'),400)},1800)}
 catch(e){sending=false;b.disabled=false;b.textContent='تایید';Debug.add('error','ثبت درخواست ناموفق: '+(e.message||e));toast('ارسال ناموفق بود؛ دوباره تلاش کنید','err')}}
